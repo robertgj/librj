@@ -1,0 +1,14 @@
+include src/binaryHeap/binaryHeap.mk
+include src/interp/interp.mk
+include src/intersectList/intersectList.mk
+include src/list/list.mk
+include src/redblackCache/redblackCache.mk
+include src/redblackTree/redblackTree.mk
+include src/skipList/skipList.mk
+include src/splayCache/splayCache.mk
+include src/splayTree/splayTree.mk
+include src/stack/stack.mk
+include src/trbTree/trbTree.mk
+include src/bsTree/bsTree.mk
+include src/swTree/swTree.mk
+include src/sgTree/sgTree.mk

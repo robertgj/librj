@@ -1,0 +1,23 @@
+DOXYGEN := doxygen -q
+
+# Otherwise set by the aegis build command defined in aegis.conf
+DOCS_AEGIS_PROJECT_NUMBER=$(DOCS)/doxygen/project_number.cfg
+
+# Documentation template for doxygen
+define documentation_template =
+
+.PHONY: ${1}
+${1} : $(DOCS)/doxygen/${1}.cfg $(DOCS)/doxygen/${1}.h
+	-if ! test -f $(DOCS_AEGIS_PROJECT_NUMBER) ; then \
+		touch $(DOCS_AEGIS_PROJECT_NUMBER); \
+	fi
+	-rm -Rf $(DOCS)/doxygen/${1}/html
+	$(DOXYGEN) $(DOCS)/doxygen/${1}.cfg
+
+endef # documentation_template
+
+CLEAN_FILES += $(DOCS_AEGIS_PROJECT_NUMBER)
+CLEAN_DIRS  += $(DOCUMENTATION:%=$(DOCS)/doxygen/%)
+
+
+

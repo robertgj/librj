@@ -1,0 +1,32 @@
+# Permalinks
+permalink:           pretty
+
+# Setup
+title:               Experiments with binary trees in C
+tagline:
+url:                 "https://robertgj.github.io"
+paginate:            1
+baseurl:             "/librj"
+
+# Assets
+#
+# We specify the directory for Jekyll so we can use @imports.
+sass:
+  sass_dir:          _sass
+  style:            :compressed
+
+# About/contact
+author:
+  name:              Robert Jenssen
+#  url:
+#  email:             "robertjenssen@ozemail.com"
+
+# Custom vars
+version:             2.0.0
+github:              
+  repo:              "https://github.com/robertgj/librj"
+
+# Gems
+plugins:
+  - jekyll-paginate
+
