@@ -7,6 +7,8 @@ DOCS_AEGIS_PROJECT_NUMBER=$(DOCS)/doxygen/project_number.cfg
 define documentation_template =
 
 .PHONY: ${1}
+CLEAN_DIRS += $(DOCS)/doxygen/${1}
+
 ${1} : $(DOCS)/doxygen/${1}.cfg $(DOCS)/doxygen/${1}.h
 	-if ! test -f $(DOCS_AEGIS_PROJECT_NUMBER) ; then \
 		touch $(DOCS_AEGIS_PROJECT_NUMBER); \
@@ -17,7 +19,6 @@ ${1} : $(DOCS)/doxygen/${1}.cfg $(DOCS)/doxygen/${1}.h
 endef # documentation_template
 
 CLEAN_FILES += $(DOCS_AEGIS_PROJECT_NUMBER)
-CLEAN_DIRS  += $(DOCUMENTATION:%=$(DOCS)/doxygen/%)
 
 
 

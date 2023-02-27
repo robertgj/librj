@@ -15,4 +15,11 @@ src/interp/interp_lex.c
 src/interp/interp_lex.h
 src/interp/interp_yacc.c
 src/interp/interp_yacc.h
-docs/project_number.cfg
+docs/doxygen/project_number.cfg
+obj
+bin
+docs/_site
+docs/.sass-cache
+docs/.jekyll-cache
+docs/.jekyll-metadata
+docs/doxygen/librj

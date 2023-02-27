@@ -388,6 +388,14 @@ clean : cleandocs
 		find . -name \*$$suf -exec rm -Rf \{\} ';' ; \
 	done
 
+.PHONY: gitignore
+gitignore:
+	-rm -f .gitignore
+	echo $(CLEAN_SUFFIXES:%="*"%) > .gitignore
+	echo $(CLEAN_FILES) >> .gitignore	
+	echo $(CLEAN_DIRS) >> .gitignore
+	sed -i -e "s/\ /\n/g" .gitignore
+
 .PHONY: backup
 backup: clean
 	(tarname=`basename $$PWD` && cd .. && \
