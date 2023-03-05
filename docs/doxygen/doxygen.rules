@@ -2,23 +2,27 @@ DOXYGEN := doxygen -q
 
 # Otherwise set by the aegis build command defined in aegis.conf
 DOCS_AEGIS_PROJECT_NUMBER=$(DOCS)/doxygen/project_number.cfg
+CLEAN_FILES += $(DOCS_AEGIS_PROJECT_NUMBER)
 
 # Documentation template for doxygen
-define documentation_template =
+define doxygen_documentation_template =
 
-.PHONY: ${1}
-CLEAN_DIRS += $(DOCS)/doxygen/${1}
+# For debugging run "make print-DOXYGEN_TARGET"
+DOXYGEN_TARGET:=$(strip ${1})
 
-${1} : $(DOCS)/doxygen/${1}.cfg $(DOCS)/doxygen/${1}.h
+ifneq ($(strip ${1}),)
+
+.PHONY: $(strip ${1})_doxygen
+$(strip ${1})_doxygen : $(DOCS)/doxygen/$(strip ${1}).cfg \
+                        $(DOCS)/doxygen/$(strip ${1}).h
 	-if ! test -f $(DOCS_AEGIS_PROJECT_NUMBER) ; then \
 		touch $(DOCS_AEGIS_PROJECT_NUMBER); \
 	fi
-	-rm -Rf $(DOCS)/doxygen/${1}/html
-	$(DOXYGEN) $(DOCS)/doxygen/${1}.cfg
+	-rm -Rf $(DOCS)/doxygen/$(strip ${1})/html
+	$(DOXYGEN) $(DOCS)/doxygen/$(strip ${1}).cfg
 
-endef # documentation_template
+CLEAN_DIRS += $(DOCS)/doxygen/$(strip ${1})
 
-CLEAN_FILES += $(DOCS_AEGIS_PROJECT_NUMBER)
+endif
 
-
-
+endef # doxygen_documentation_template

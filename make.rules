@@ -360,7 +360,7 @@ $(foreach program, $(PROGRAMS), $(eval $(call program_template,$(program))))
 $(foreach static_library, $(STATIC_LIBRARIES),\
 $(eval $(call static_library_template,$(static_library))))
 
-# Makefile targets for documentation (see doc/doc.rules and doc/doc.mk)
+# Makefile targets for documentation (see docs/docs.rules and docs/docs.mk)
 $(foreach documentation, $(DOCUMENTATION),\
 $(eval $(call documentation_template,$(documentation))))
 
@@ -377,7 +377,7 @@ $(BIN) :
 	-@mkdir -p $(BIN)
 
 .PHONY: clean
-clean : cleandocs
+clean :
 	-@for file in $(CLEAN_FILES) ; do \
 		if test -f $$file; then rm -f $$file ; fi \
 	done
@@ -405,7 +405,7 @@ backup: clean
 programs : $(PROGRAMS:%=$(BIN)/%)
 
 .PHONY: docs
-docs : $(DOCUMENTATION)
+docs :
 
 .PHONY: all
 all : programs docs
