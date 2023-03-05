@@ -1,4 +1,4 @@
-include docs/doxygen/doxygen.rules
+include docs/doxygen/doxygen.mk
 
 DOCUMENTATION += librj
 
