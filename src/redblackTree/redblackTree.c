@@ -489,7 +489,7 @@ redblackTreeRemoveColour(redblackTree_t * const tree,
   while ((((node == NULL) || redblackTreeIsBlack(node))) && 
          (node != tree->root))
     {
-      if (parent->left == node) 
+      if ((parent->left == node) && (parent->right != NULL))
         {
           sibling = parent->right;
           if (redblackTreeRightIsChild(parent) && redblackTreeIsRed(sibling)) 
