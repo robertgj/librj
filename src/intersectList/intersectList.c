@@ -95,24 +95,7 @@ intersectListShowState(intersectList_t * const list,
 {
   coord_t x, y;
   real_t tol;
-  
-  if (list == NULL)
-    {
-      return;
-    }
-
-  if (upperList == NULL)
-    {
-      list->debug(__func__, __LINE__, "invalid upperList==NULL!");
-      return;
-    }
-
-  if (sweep == NULL)
-    {
-      list->debug(__func__, __LINE__, "invalid sweep==NULL!");
-      return;
-    }
-
+ 
   pointGetCoords(sweep, &x, &y);
   pointGetTolerance(sweep, &tol);
   (list->debug)(NULL, 0, "");
@@ -168,23 +151,6 @@ intersectListInsertSegmentsInStatus(intersectList_t * const list,
                                     point_t * const sweep)
 {
   segmentListEntry_t *entry;
-
-  if (list == NULL)
-    {
-      return NULL;
-    }
-
-  if (segments == NULL)
-    {
-      list->debug(__func__, __LINE__, "invalid segments==NULL!");
-      return NULL;
-    }
-
-  if (sweep == NULL)
-    {
-      list->debug(__func__, __LINE__, "invalid sweep==NULL!");
-      return NULL;
-    }
 
   /* Insert segments */
   entry = segmentListGetFirst(segments);
@@ -252,17 +218,6 @@ intersectListCreateIntersect(intersectList_t * const list, point_t * const point
 {
   segmentList_t *segments;
   intersect_t *intersect;
-
-  if (list == NULL)
-    {
-      return NULL;
-    }
-
-  if (point == NULL)
-    {
-      list->debug(__func__, __LINE__, "invalid point==NULL!");
-      return NULL;
-    }
 
   /* Create a new intersection */
   if ((intersect = (intersect_t *)(list->alloc)(sizeof(intersect_t))) == NULL)
@@ -345,18 +300,6 @@ intersectListSearchStatusForPoint(intersectList_t * const list,
   status_t *leftS, *nextLeftS;
   segment_t *lefts;
 
-  /* Sanity checks */
-  if (list == NULL)
-    {
-      return NULL;
-    }
-
-  if (point == NULL)
-    {
-      list->debug(__func__, __LINE__, "invalid point==NULL!");
-      return NULL;
-    }
-
   /* Search for the lowest segment containing the point */
   if ((leftS = statusTreeGetLeftMost(list->t, point)) == NULL)
     {
@@ -433,30 +376,6 @@ intersectListFindNewEvent(intersectList_t * const list,
   point_t i;
   compare_e comp;
 
-  /* Sanity checks */
-  if (list == NULL)
-    {
-      return NULL;
-    }
-
-  if (point == NULL)
-    {
-      list->debug(__func__, __LINE__, "invalid point==NULL!");
-      return NULL;
-    }
-
-  if (sl == NULL)
-    {
-      list->debug(__func__, __LINE__, "invalid sl==NULL!");
-      return NULL;
-    }
-
-  if (sr == NULL)
-    {
-      list->debug(__func__, __LINE__, "invalid sr==NULL!");
-      return NULL;
-    }
-
   /*  
    *  If sl and sr intersect below the current sweep line, or on it
    *  and to the right of the current event, and the intersection is
@@ -510,18 +429,6 @@ intersectListHandleEventPoint(intersectList_t * const list,
 {
   segmentList_t *upperList;
   point_t *point;
-
-  /* Sanity check */
-  if (list == NULL)
-    {
-      return NULL;
-    }
-
-  if (event == NULL)
-    {
-      list->debug(__func__, __LINE__, "invalid event==NULL!");
-      return NULL;
-    }
 
   if((point = eventGetPoint(event)) == NULL)
     {
@@ -717,22 +624,12 @@ intersectListHandleEventPoint(intersectList_t * const list,
 point_t *
 intersectGetPoint(intersect_t * const intersect)
 {
-  if (intersect == NULL)
-    {
-      return NULL;
-    }
-
   return &(intersect->point);
 }
 
 segmentList_t *
 intersectGetList(intersect_t * const intersect)
 {
-  if (intersect == NULL)
-    {
-      return NULL;
-    }
-
   return intersect->list;
 }
 
@@ -837,18 +734,7 @@ intersectListScanSegments(intersectList_t * const list,
                           segmentList_t * const segments)
 {
   event_t *event;
-
-  if (list == NULL)  
-    {
-      return false;
-    }
-
-  if (segments == NULL)
-    {
-      list->debug(__func__, __LINE__, "invalid segments==NULL!");
-      return false;
-    }
-
+  
   if (intersectListCheck(list) == false)
     {
       list->debug(__func__, __LINE__, "intersectListCheck() failed!");
@@ -877,12 +763,7 @@ intersectListScanSegments(intersectList_t * const list,
       /* 
        *  Handle the event point
        */
-      if (intersectListHandleEventPoint(list, event) == NULL)
-        {
-          (list->debug)(__func__, __LINE__, 
-                        "intersectListHandleEventPoint() failed!");
-          return false;
-        }
+      intersectListHandleEventPoint(list, event);
  
       /* 
        *  Deallocate the current event point now
@@ -901,11 +782,6 @@ void intersectListClear(intersectList_t * const list)
 {
   intersect_t *intersect;
 
-  if (list == NULL)
-    {
-      return;
-    }
-  
   if (list->size == 0)
     {
       return;
@@ -940,11 +816,6 @@ void intersectListClear(intersectList_t * const list)
 void 
 intersectListDestroy(intersectList_t * const list)
 {
-  if (list == NULL)
-    {
-      return;
-    }
-
   intersectListClear(list);
   segmentListDestroy(list->lower);
   segmentListDestroy(list->interior);
@@ -959,54 +830,30 @@ intersectListDestroy(intersectList_t * const list)
 size_t 
 intersectListGetSize(intersectList_t * const list)
 {
-  if (list == NULL)
-    {
-      return 0;
-    }
-
   return list->size;
 }
 
 intersect_t *
 intersectListGetFirst(intersectList_t * const list)
 {
-  if (list == NULL)
-    {
-      return NULL;
-    }
-
   return list->head;
 }
 
 intersect_t *
-intersectListGetNext(intersectList_t * const list, 
+intersectListGetNext(intersectList_t * const list,
                      intersect_t * const intersect)
 {
-  if (list == NULL)
-    {
-      return NULL;
-    }
-
-  if (intersect == NULL)
-    {
-      list->debug(__func__, __LINE__, "intersect==NULL!");
-      return NULL;
-    }
-
+  (void)list;
   return intersect->next;
 }
 
 bool
 intersectListCheck(intersectList_t * const list)
 {
-  if (list == NULL)
-    {
-      return false;
-    }
-
-  if ((list->q == NULL) || 
-      (eventQueueIsEmpty(list->q) != true) ||
+  if ((list == NULL) || 
+      (list->q == NULL) || 
       (list->t == NULL) || 
+      (eventQueueIsEmpty(list->q) != true) ||
       (statusTreeIsEmpty(list->t) != true) || 
       (segmentListGetSize(list->upper) != 0) ||
       (segmentListGetSize(list->interior) != 0) ||
@@ -1024,11 +871,6 @@ intersectListShow(intersectList_t * const list)
   intersect_t *i;
   point_t *p;
   coord_t x, y;
-
-  if (list == NULL)
-    {
-      return;
-    }
 
   (list->debug)(NULL, 0, "%d intersections", list->size);
 
